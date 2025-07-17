@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+message SpeedPlannerConfig {
+  double target_time=1;
+  double target_s=2;
+  double target_v=3;
+  double acc_weight=4;
+  double jerk_weight=5;
+  double ref_s_weight=6;
+  bool use_warm_start=7;
+  bool use_smoothed_dp_guide_line=8;
+  double s_potential_weight=9;
+  bool use_soft_bound_in_nonlinear_speed_opt=10;
+  double soft_s_bound_weight=11;
+  double lat_acc_weight=12;
+  double ref_v_weight=13;
+  double delta_time=14;
+  double total_time=15;
+}
+

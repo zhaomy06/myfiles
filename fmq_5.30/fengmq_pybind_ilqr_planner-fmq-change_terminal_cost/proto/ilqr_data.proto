@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+option cc_enable_arenas = true;
+
+import "plan_common.proto";
+import "ilqr_config.proto";
+
+
+message Output {
+  repeated common.State states = 1;
+  repeated double controls = 2;
+}
+
+message WarmStartData {
+  bool success = 1;  // equal to SolverStatus.success
+  repeated common.State states = 2;
+  repeated double controls = 3;
+}
+
+message DoubleVec {
+  repeated double value = 1;
+}
+
+message DetailTimeCost {
+  double t_compute_deriv_ms = 1;
+  double t_backward_pass_ms = 2;
+  double t_forward_pass_ms = 3;
+}
+
+message ILqrSolverInfo {
+  int32 solver_condition = 1;
+  int32 cost_size = 2;
+  int32 iter_count = 3;
+  double init_cost = 4;
+  double total_time_ms = 5;
+  double t_compute_deriv_ms = 6;
+  double t_backward_pass_ms = 7;
+  double t_forward_pass_ms = 8;
+}
+
+message DataIteration {
+  bool linesearch_success = 1;
+  double cur_lambda = 2;
+  double cost = 3;
+  double dcost = 4;
+  double expect = 5;
+  repeated common.State x_vec = 6;
+  repeated double u_vec = 7;
+  DetailTimeCost detail_time_cost = 8;
+  repeated DoubleVec detail_cost = 9;
+}
+
+enum CandidateType {
+  ForwardSim = 0;
+  PrePlan = 1;
+  Normal = 2;
+  BackUpInit = 3;
+  BackUpFinal = 4;
+}
+
+message ConstrainInfo {
+  common.Bound delta_bound = 1;
+  common.Bound omega_bound = 2;
+  common.Bound accel_bound = 3;
+  common.Bound jerk_bound = 4;
+  common.Bound snap_bound = 5;
+}
+
+message OutputCandidates {
+  CandidateType final_output_type = 1;
+  repeated Output candidates = 2;
+  bool is_final_traj_rb_collision = 3;
+  repeated ConstrainInfo constraints = 4;
+  CandidateType init_seed_type = 5;
+}
+
+message LatMotionPlanInput {
+  WarmStartData warm_start_data = 4;
+  ilqr_solver.SolverConfig solver_config = 5;
+  ConstrainInfo ego_constrain_info = 6;
+}
+
+message LatMotionPlanOutput {
+  OutputCandidates output_candidates = 1;
+  ILqrSolverInfo ilqr_info = 2;
+  repeated DataIteration data_iteration = 4;
+  Output final_output = 5;
+}

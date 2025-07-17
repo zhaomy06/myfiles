@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+
+package ilqr_solver;
+message IlqrConfig {
+  int32 horizon = 1;
+  int32 state_size = 2;
+  int32 input_size = 3;
+  double cost_tol = 4;
+  double cost_percent_tol = 5;
+  int32 max_iter = 6;
+}
+
+message CilqrConfig {
+  int32 max_outer_iterations = 1;
+  double penalty_factor = 2;
+  double init_rho = 3;
+  int32 min_constraint_index = 4;
+  int32 max_constraint_index = 5;
+  double target_accel_value = 6;
+  bool enable_constraint_test = 7;
+}
+
+message SolverConfig {
+  bool is_debug_mode = 1;
+  IlqrConfig ilqr_config = 2;
+  bool enable_cilqr = 3;
+  CilqrConfig cilqr_config = 4;
+  bool viz_matrix = 5;
+}

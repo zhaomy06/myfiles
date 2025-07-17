@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+message OptPathPoint{
+  double x=1;
+  double y=2;
+  double theta=3;
+  double s=4;
+  double kappa=5;
+}
+
+message TrajectoryPoint{
+    double time=1;
+    double s=2;
+    double v=3;
+    double a=4;
+    double x=5;
+    double y=6;
+    double theta=7;
+    double kappa=8;
+}
+
+message SpeedPlannerProtoMsg{
+    repeated OptPathPoint opt_path_points=1;
+    double init_v=2;
+    double init_a=3;
+    double init_jerk=4;
+    repeated TrajectoryPoint traj_points=5;
+}

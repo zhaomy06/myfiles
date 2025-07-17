@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package common;
+
+enum DeciderLayerId {
+  DefaultId = 0;
+  MapBoundId = 1;
+  InitRefOffsetLaneChangeId = 2;
+  InitRefOffsetLaneKeepId = 3;
+  ModifyBoundLaneKeepId = 4;
+  ModifyBoundLaneChangeId = 5;
+  ObstacleExpansionBoundId = 6;
+  LowSpeedDodgeId = 7;
+  CartRbId = 8;
+  WideLaneModifyOffsetId = 9;
+  VehicleStreamWallId = 10;
+  CartLbId = 11;
+  ClampRefOffsetFinalId = 12;
+}
+
+message Bound {
+  double lower = 1;
+  double upper = 2;
+  DeciderLayerId source = 3;
+}
+
+
+message FrenetState {
+  double s = 1;
+  double l = 2;
+  double dl = 3;
+  double ddl = 4;
+  double l_start = 5;
+  double l_end = 6;
+}
+
+message State {
+  double x = 1;
+  double y = 2;
+  double theta = 3;
+  double delta = 4;
+  double gamma = 5;
+  double curvature = 6;
+  double v = 7;
+  double a = 8;
+  double t = 9;
+  FrenetState frenet_state = 10;
+}
+
+message Point2d {
+  double x=1;
+  double y=2;
+}
+
+message Polygen {
+  repeated Point2d pts=1;
+}

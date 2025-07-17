@@ -1,0 +1,5 @@
+wheelbase: 1.8
+steer_angle_limits: 0.2
+xy_resolution:0.1
+yaw_resolution:0.01
+steerPresion:10

@@ -1,0 +1,93 @@
+syntax = "proto3";
+option cc_enable_arenas = true;
+import "plan_common.proto";
+
+message IlqrParams {
+  double w_smooth_kappa = 1;
+  double w_control_dkappa = 2;
+  double w_control_a = 3;
+  double w_target_v=5;
+  double target_v=6;
+  double dis_threshold = 7;
+  double delta_t = 8;
+  int32 max_iter = 9;
+  double cost_tol = 10;
+  double cost_percent_tol = 11;
+  bool viz_matrix=12;
+  double w_refline=13;
+  double w_obs=14;
+  double w_terminal_pos=15;
+  double w_terminal_theta=16;
+
+  double vehicle_length=17;
+  double vehicle_width=18;
+  double d_cr=19;
+  double w_lateral_acc=20;
+}
+
+message HybridAStarParams {
+  double wheelbase=1;
+  double steer_angle_limits=2;
+  double xy_resolution=3;
+  double yaw_resolution=4;
+  double steerPresion=5;
+}
+
+message Polygen{
+  repeated double polygen_points=1;
+}
+
+message RawPoint{
+  double x=1;
+  double y=2;
+  double theta=3;
+}
+
+message OptPoint{
+  double x=1;
+  double y=2;
+  double theta=3;
+  double v=4;
+  double a=5;
+}
+
+message IlqrState {
+  double x = 1;
+  double y = 2;
+  double theta = 3;
+  double kappa = 4;
+  double v=5;
+}
+
+message IlqrControl {
+  double dkappa = 1;
+  double a = 2;
+}
+
+message IlqrWarmStartData {
+  bool success = 1;                          // equal to SolverStatus.success
+  repeated IlqrState states = 2;      // equal to Output.states
+  repeated IlqrControl controls = 3;  // equal to Output.controls
+}
+
+message IlqrIterationData {
+  repeated IlqrState states = 1;      
+  repeated IlqrControl controls = 2;  
+}
+
+message Rectangle{
+  repeated common.Point2d pts=1;
+}
+
+message IlqrProtoMsg{
+  repeated common.Polygen polygens=1;
+  repeated RawPoint raw_points=2;
+  repeated OptPoint opt_points=3;
+  common.State ego_state=4;
+  IlqrWarmStartData warm_start_data=5;
+  repeated IlqrIterationData ilqr_iteration_datas=6;
+  repeated Rectangle rectangles=7;
+}
+
+
+

@@ -1,0 +1,13 @@
+target_v:20
+acc_weight:1
+jerk_weight:1
+ref_s_weight:0
+use_warm_start:True
+s_potential_weight:0.0
+soft_s_bound_weight:0
+lat_acc_weight:0.01
+ref_v_weight:100
+delta_time:0.1
+total_time:10
+use_smoothed_dp_guide_line: False
+use_soft_bound_in_nonlinear_speed_opt: False
